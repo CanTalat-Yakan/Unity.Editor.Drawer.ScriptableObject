@@ -16,7 +16,7 @@ All utilities are under the `UnityEssentials` namespace. This keeps your project
 using UnityEssentials;
 ```
 
-# ScriptableObjectDrawer  
+# Scriptable Object Drawer  
 Custom property drawer for Unity's `ScriptableObject` fields in the editor, enabling foldout display of the object's inspector inline.
 
 ## Usage Examples
