@@ -36,6 +36,7 @@ namespace Unity.Essentials
                 if (editor != null)
                     editor.OnInspectorGUI();
 
+
                 EditorGUI.indentLevel--;
             }
         }
