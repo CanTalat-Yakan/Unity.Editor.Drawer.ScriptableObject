@@ -25,7 +25,6 @@ namespace Unity.Essentials
 
             EditorGUI.indentLevel++;
             {
-                // Create editor only if needed
                 if (editor == null || editor.target != property.objectReferenceValue)
                     Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
 
