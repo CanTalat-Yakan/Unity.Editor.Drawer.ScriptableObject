@@ -20,19 +20,18 @@ namespace Unity.Essentials
             }
 
             property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none);
-            if (property.isExpanded)
-            {
-                EditorGUI.indentLevel++;
+            if (!property.isExpanded)
+                return;
 
+            EditorGUI.indentLevel++;
+            {
                 // Create editor only if needed
                 if (editor == null || editor.target != property.objectReferenceValue)
                     Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
 
-                if (editor != null)
-                    editor.OnInspectorGUI();
-
-                EditorGUI.indentLevel--;
+                editor?.OnInspectorGUI();
             }
+            EditorGUI.indentLevel--;
         }
     }
 }
