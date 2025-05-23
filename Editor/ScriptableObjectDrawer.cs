@@ -23,9 +23,6 @@ namespace Unity.Essentials
         /// expanded state. If the property has an object reference, it displays a foldout to expand or collapse
         /// additional details. When expanded, the method renders the inspector GUI for the referenced object using a
         /// cached editor instance.</remarks>
-        /// <param name="position">The rectangle on the screen to use for the property GUI.</param>
-        /// <param name="property">The serialized property to render.</param>
-        /// <param name="label">The label to display alongside the property field.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.PropertyField(position, property, label, true);
