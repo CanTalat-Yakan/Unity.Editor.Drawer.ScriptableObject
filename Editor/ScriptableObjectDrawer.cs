@@ -33,7 +33,7 @@ namespace Unity.Essentials
                 return;
             }
 
-            property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none);
+            property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none, true);
             if (!property.isExpanded)
                 return;
 
