@@ -15,16 +15,14 @@ namespace Unity.Essentials
     {
         private Editor _editor = null;
 
-        /// <summary>
-        /// Renders the custom GUI for a serialized property in the Unity Editor.
-        /// </summary>
-        /// <remarks>This method customizes the rendering of a serialized property in the Unity Editor. 
-        /// If the property has no assigned object reference, it displays a standard property field and collapses any
-        /// expanded state. If the property has an object reference, it displays a foldout to expand or collapse
-        /// additional details. When expanded, the method renders the inspector GUI for the referenced object using a
-        /// cached editor instance.</remarks>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if (property.propertyPath.Contains("Array.data"))
+            {
+                EditorGUI.PropertyField(position, property, label, true);
+                return;
+            }
+
             EditorGUI.PropertyField(position, property, label, true);
 
             if (property.objectReferenceValue == null)
