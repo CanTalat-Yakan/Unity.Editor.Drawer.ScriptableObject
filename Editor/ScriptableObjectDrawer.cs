@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 namespace Unity.Essentials
 {
@@ -40,7 +41,26 @@ namespace Unity.Essentials
                 if (_editor == null || _editor.target != property.objectReferenceValue)
                     Editor.CreateCachedEditor(property.objectReferenceValue, null, ref _editor);
 
-                _editor?.OnInspectorGUI();
+                if (_editor != null)
+                {
+                    SerializedObject so = _editor.serializedObject;
+                    so.Update();
+                    EditorGUI.BeginChangeCheck();
+
+                    SerializedProperty iterator = so.GetIterator();
+                    bool enterChildren = true;
+                    while (iterator.NextVisible(enterChildren))
+                    {
+                        if (iterator.name == "m_Script") // Skip script reference
+                            continue;
+
+                        EditorGUILayout.PropertyField(iterator, true); // Draw children (lists, arrays, etc.)
+                        enterChildren = false;
+                    }
+
+                    if (EditorGUI.EndChangeCheck())
+                        so.ApplyModifiedProperties();
+                }
             }
             EditorGUI.indentLevel--;
         }
