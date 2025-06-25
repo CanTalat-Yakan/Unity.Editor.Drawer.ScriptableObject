@@ -32,15 +32,38 @@ namespace Unity.Essentials
                 return;
             }
 
+            // Check if there are any visible properties to render
+            bool hasVisibleProperties = false;
+            if (_editor == null || _editor.target != property.objectReferenceValue)
+                Editor.CreateCachedEditor(property.objectReferenceValue, null, ref _editor);
+
+            if (_editor != null)
+            {
+                SerializedObject so = _editor.serializedObject;
+                SerializedProperty iterator = so.GetIterator();
+                bool enterChildren = true;
+                while (iterator.NextVisible(enterChildren))
+                {
+                    if (iterator.name == "m_Script")
+                        continue;
+                    hasVisibleProperties = true;
+                    break;
+                }
+            }
+
+            // Only show foldout if there are visible properties
+            if (!hasVisibleProperties)
+            {
+                property.isExpanded = false;
+                return;
+            }
+
             property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none, true);
             if (!property.isExpanded)
                 return;
 
             EditorGUI.indentLevel++;
             {
-                if (_editor == null || _editor.target != property.objectReferenceValue)
-                    Editor.CreateCachedEditor(property.objectReferenceValue, null, ref _editor);
-
                 if (_editor != null)
                 {
                     SerializedObject so = _editor.serializedObject;
